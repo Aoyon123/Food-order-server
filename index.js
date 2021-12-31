@@ -34,16 +34,27 @@ client.connect((err) => {
       res.send(result.insertedCount > 0);
     });
   });
-  app.post("/login", (req, res) => {
+  app.post("/login", async(req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-    collection
-      .findOne({ username: username, password: password })
-      .then((result) => {
-        console.log("result count", result);
-        res.send(result);
-      });
+    console.log(username,password)
+    const user = await collection.findOne({username:username})
+    if(user.password === password){
+        res.send("Valid user");
+        console.log("Valid User")
+    }
+    else{
+        res.send("Invalid User");
+        console.log("Invalid user")
+    }
+    
   });
+  app.get("/user/:email",(res,req)=>{
+    cartCollection.find({ email: req.params.email })
+    .toArray((err, user) => {
+      res.send(user)
+    })
+  })
   // perform actions on the collection object
 });
 
