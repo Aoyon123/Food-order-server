@@ -49,8 +49,8 @@ client.connect((err) => {
     }
     
   });
-  app.get("/user/:email",(res,req)=>{
-    cartCollection.find({ email: req.params.email })
+  app.get("/user/:username",(res,req)=>{
+    cartCollection.find({ username: req.params.username })
     .toArray((err, user) => {
       res.send(user)
     })
